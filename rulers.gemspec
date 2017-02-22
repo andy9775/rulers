@@ -12,9 +12,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'A ruby on rails clone'
   spec.homepage      = 'https://github.com/andy9775/rulers'
 
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(test|spec|features)/})
-  end
+  spec.files         = Dir["**/*"].select { |f| File.file? f }  
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
