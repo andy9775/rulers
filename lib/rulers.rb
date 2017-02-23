@@ -1,6 +1,8 @@
 require 'rulers/version'
 require 'rulers/array' # make convenience methods/classes available to apps
 require 'rulers/routing'
+require 'rulers/util'
+require 'rulers/dependencies'
 
 module Rulers
   class Application
