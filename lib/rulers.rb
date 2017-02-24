@@ -3,6 +3,7 @@ require 'rulers/array' # make convenience methods/classes available to apps
 require 'rulers/routing'
 require 'rulers/util'
 require 'rulers/dependencies'
+require 'rulers/controller'
 
 module Rulers
   class Application
@@ -18,14 +19,6 @@ module Rulers
       text = controller.send action
 
       [200, { 'Content-Type' => 'text/html' }, [text]]
-    end
-  end
-
-  class Controller
-    attr_reader :env
-
-    def initialize(env)
-      @env = env
     end
   end
 end

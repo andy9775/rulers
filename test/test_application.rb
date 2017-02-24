@@ -1,7 +1,17 @@
 require_relative 'test_helper' # require from this directory not load path
 
-class TestApp < Rulers::Application; end
+class TestController < Rulers::Controller
+  def index
+    @world = 'world'
+    'Hello <%= @world %>'
+  end
+end
 
+class TestApp < Rulers::Application
+  def get_controller_and_action(_env)
+    [TestController, 'index']
+  end
+end
 # includes assertions
 # ruby-doc.org/stdlib-1.8.7/libdoc/test/unit/rdoc/Test/Unit/Assertions.html
 class RulersAppTest < Test::Unit::TestCase
@@ -15,14 +25,14 @@ class RulersAppTest < Test::Unit::TestCase
   end
 
   def test_request
-    get '/'
+    get '/example/route'
 
     assert last_response.ok?
     assert last_response.body['Hello']
   end
 
   def test_request_headers
-    get '/'
+    get '/example/route'
 
     assert last_response.ok?
     assert_equal 'text/html', last_response.headers['Content-Type']
