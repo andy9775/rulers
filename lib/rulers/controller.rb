@@ -13,6 +13,7 @@ module Rulers
 
     def initialize(env)
       @env = env
+      @routing_params = {}
     end
 
     def request
@@ -20,7 +21,7 @@ module Rulers
     end
 
     def params
-      request.params
+      @routing_params
     end
 
     # specify the instance variables as set by the user
@@ -55,6 +56,24 @@ module Rulers
         hashes[:status] || 200,
         hashes[:headers] || { 'Content-Type' => 'text/html' }
       )
+    end
+
+    def dispatch(action, routing_params = {})
+      @routing_params = routing_params
+      send action
+
+      render action unless @response
+
+      status, headers, response = @response.to_a
+      [status, headers, [response.body].flatten]
+    end
+
+    class << self
+      # return a proc which renders the requested action
+      def action(action, routing_params = {})
+        # create a new instance of the controller and renders the action
+        proc { |e| new(e).dispatch(action, routing_params) }
+      end
     end
 
     private

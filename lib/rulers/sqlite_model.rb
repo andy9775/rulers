@@ -48,7 +48,7 @@ module Rulers
       class << self
         # create a new entry in the table
         def create(values)
-          values.stringify_keys
+          values.stringify_keys!
           values.delete 'id'
           keys = schema.keys - ['id']
 
